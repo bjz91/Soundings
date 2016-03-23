@@ -1,5 +1,10 @@
 function writeSoundingsFiles(folderPath,regionStr,typeStr,yearStr,monthStr,dayStr,timeStr,siteStr)
 
+% Construct folders
+if ~exist(folderPath,'dir')
+    eval(['mkdir ',folderPath]);
+end
+
 [str,stats]=urlread(['http://weather.uwyo.edu/cgi-bin/sounding?region=',regionStr,...
     '&TYPE=',typeStr,'&YEAR=',yearStr,'&MONTH=',monthStr,'&FROM=',dayStr,timeStr,...
     '&TO=',dayStr,timeStr,'&STNM=',siteStr]);
