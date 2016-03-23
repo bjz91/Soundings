@@ -38,6 +38,6 @@ if stats==1 % Stats equals to 0 means that it cannot access to the web page
 else
     
     disp('ERROR in load the web page!');
-    return;
+    exit;
     
 end
