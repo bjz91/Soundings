@@ -11,7 +11,7 @@ outputStr=['output/',regionStr,'/'];
 
 [siteArr,eleArr]=getSite([inputStr,[regionStr,'.xlsx']]);
 yearArr=2005:2013;
-monthArr=1:12;
+monthArr=5:9;
 timeArr=[0,12];
 
 % Output data
