@@ -6,10 +6,10 @@ addpath('src/');
 
 % Parameters
 regionStr='seasia';
-inputStr='input/';
+inputStr='/home/bijianzhao/bjz_tmp/China/China036Hourly/';
 outputStr=['output/',regionStr,'/'];
 
-[siteArr,eleArr]=getSite([inputStr,[regionStr,'.xlsx']]);
+[siteArr,latArr,lonArr,eleArr]=getSite(['input/',[regionStr,'.xlsx']]);
 yearArr=2005:2013;
 monthArr=5:9;
 timeArr=[0,12];
@@ -17,23 +17,27 @@ timeArr=[0,12];
 % Output data
 directionTotal=[];
 speedTotal=[];
+heightTotal=[];
 
 
 for siteNum=1:length(siteArr)           % For each site
     directionTotal=[];
     speedTotal=[];
+    heightTotal=[];
     for year=yearArr                    % For each year
         for month=monthArr              % For each month
             dayNum=eomday(year,month);  % For each day
             for day=1:dayNum
-                %% Make strings
-                siteStr=cell2mat(siteArr(siteNum));
+                %% Make Parameters
                 yearStr=num2str(year);
                 monthStr=sprintf('%02d',month);
                 dayStr=sprintf('%02d',day);
+                siteStr=cell2mat(siteArr(siteNum));
+                lat=double(cell2mat(latArr(siteNum)));
+                lon=double(cell2mat(lonArr(siteNum)));
                 
                 %% Folder Path
-                folderPath=[outputStr,siteStr,'/',yearStr,'/',monthStr,'/',dayStr,'/'];
+                folderPath=[inputStr,yearStr,'/',monthStr,'/',dayStr,'/netcdf_complete/'];
                 disp(folderPath);
                 
                 %% The elevation of this site and the height threshold
@@ -48,13 +52,12 @@ for siteNum=1:length(siteArr)           % For each site
                 for time=timeArr        % For observation time
                     
                     timeStr=sprintf('%02d',time);
-                    data=loadSoundings([folderPath,'List_',siteStr,'_',yearStr,monthStr,dayStr,'_',timeStr,'.txt']);
+                    ncName=[folderPath,yearStr,monthStr,dayStr,'_',timeStr,'_complete.nc'];
+                    [direction,speed,height]=loadECMWF(ncName,lat,lon,heightThreshold,speedThreshold);
+                    directionTotal=[directionTotal,direction];
+                    speedTotal=[speedTotal,speed];
+                    heightTotal=[heightTotal,height];
                     
-                    if ~isempty(data)
-                        [direction,speed]=getParameters(data,heightThreshold,speedThreshold,elevation);
-                        directionTotal=[directionTotal,direction];
-                        speedTotal=[speedTotal,speed];
-                    end
                 end
                 disp(['Total Numer=',num2str(length(directionTotal))]);
             end
@@ -67,8 +70,8 @@ for siteNum=1:length(siteArr)           % For each site
         eval(['mkdir ',savepath]);
     end
     saveFileName=[siteStr,'_',num2str(min(yearArr)),num2str(sprintf('%02d',min(monthArr))),...
-        '_',num2str(max(yearArr)),num2str(sprintf('%02d',max(monthArr))),'.mat'];
-    save([savepath,saveFileName],'directionTotal','speedTotal');
+        '_',num2str(max(yearArr)),num2str(sprintf('%02d',max(monthArr))),'_ECMWF.mat'];
+    save([savepath,saveFileName],'directionTotal','speedTotal','heightTotal');
     disp([savepath,saveFileName]);
     
 end
