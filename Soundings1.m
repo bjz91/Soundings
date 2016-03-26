@@ -3,7 +3,7 @@ clc
 
 addpath('src/');
 
-parpool(12);
+parpool(9);
 
 %regionStr='europe';
 typeStr='TEXT%3ALIST';
@@ -17,7 +17,7 @@ outputStr=['output/',regionStr,'/'];
 
 % Parameters
 siteArr=getSite([inputStr,[regionStr,'.xlsx']]);
-yearArr=2005:2013;
+yearArr=2012:2013;
 monthArr=1:12;
 timeArr=[0,12];
 

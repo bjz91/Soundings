@@ -10,8 +10,13 @@ inputStr='input/';
 outputStr=['output/',regionStr,'/'];
 
 [siteArr,~,~,eleArr]=getSite([inputStr,[regionStr,'.xlsx']]);
-yearArr=2005:2013;
-monthArr=5:9;
+%{
+%Wuhan
+siteArr={'57494'};
+eleArr={23};
+%}
+yearArr=2013:2013;
+monthArr=1:12;
 timeArr=[0,12];
 
 % Output data
@@ -59,7 +64,7 @@ for siteNum=1:length(siteArr)           % For each site
                         heightTotal=[heightTotal,height];
                     end
                 end
-                disp(['Total Numer=',num2str(length(directionTotal))]);
+                disp(['Total Number=',num2str(length(directionTotal))]);
             end
         end
     end
