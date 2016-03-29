@@ -1,3 +1,4 @@
 1. 因为r0以外的机器不联网，所以不能使用qsub
-2. Soundings1.m是由Soundings网页转换成TXT文件
-3. Soundings2.m是将TXT文件处理成可用于绘制Wind Rose的mat文件
+2. downloadSound.m是由Soundings网页转换成TXT文件
+3. SoundECMWF.m是将Soundings和ECMWF数据处理成可用于绘制Wind Rose的mat文件
+4. ECMWF.m是单独生成ECMWF的mat文件

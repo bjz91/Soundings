@@ -3,13 +3,12 @@ clc
 
 addpath('src/');
 
-
 % Parameters
-regionStr='seasia';
-inputStr='/home/bijianzhao/bjz_tmp/China/China036Hourly/';
+regionStr='europe';
+inputStr='/home/bijianzhao/bjz_tmp/Europe/Europe036Hourly/';
 outputStr=['output/',regionStr,'/'];
 
-[siteArr,latArr,lonArr,eleArr]=getSite(['input/',[regionStr,'.xlsx']]);
+[siteArr,latArr,lonArr,eleArr]=getSite(['input/',[regionStr,'_test.xlsx']]);
 %{
 %Wuhan
 siteArr={'57494'};
@@ -17,15 +16,14 @@ latArr={30.61};
 lonArr={114.13};
 eleArr={23};
 %}
-yearArr=2013:2013;
-monthArr=1:12;
+yearArr=2005:2014;
+monthArr=5:9;
 timeArr=[0,12];
 
 % Output data
 directionTotal=[];
 speedTotal=[];
 heightTotal=[];
-
 
 for siteNum=1:length(siteArr)           % For each site
     directionTotal=[];

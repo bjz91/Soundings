@@ -5,39 +5,44 @@ if ~exist(folderPath,'dir')
     eval(['mkdir ',folderPath]);
 end
 
-[str,stats]=urlread(['http://weather.uwyo.edu/cgi-bin/sounding?region=',regionStr,...
-    '&TYPE=',typeStr,'&YEAR=',yearStr,'&MONTH=',monthStr,'&FROM=',dayStr,timeStr,...
-    '&TO=',dayStr,timeStr,'&STNM=',siteStr]);
-
-if stats==1 % Stats equals to 0 means that it cannot access to the web page
+while true
     
-    preStart=strfind(str,'<PRE>');
-    preEnd=strfind(str,'</PRE>');
+    [str,stats]=urlread(['http://weather.uwyo.edu/cgi-bin/sounding?region=',regionStr,...
+        '&TYPE=',typeStr,'&YEAR=',yearStr,'&MONTH=',monthStr,'&FROM=',dayStr,timeStr,...
+        '&TO=',dayStr,timeStr,'&STNM=',siteStr]);
     
-    if ~isempty(preStart) % Empty means that it cannot get the data from web page
+    if stats==1 % Stats equals to 0 means that it cannot access to the web page
         
-        strList=str(preStart(1)+6:preEnd(1)-2);
-        strHead=str(preStart(2)+6:preEnd(2)-2);
+        preStart=strfind(str,'<PRE>');
+        preEnd=strfind(str,'</PRE>');
         
-        filePathList=[folderPath,'List_',siteStr,'_',yearStr,monthStr,dayStr,'_',timeStr,'.txt'];
-        fidList=fopen(filePathList,'w');
-        fprintf(fidList,'%s',strList);
-        fclose(fidList);
+        if ~isempty(preStart) % Empty means that it cannot get the data from web page
+            
+            strList=str(preStart(1)+6:preEnd(1)-2);
+            strHead=str(preStart(2)+6:preEnd(2)-2);
+            
+            filePathList=[folderPath,'List_',siteStr,'_',yearStr,monthStr,dayStr,'_',timeStr,'.txt'];
+            fidList=fopen(filePathList,'w');
+            fprintf(fidList,'%s',strList);
+            fclose(fidList);
+            
+            disp(filePathList);
+            
+            filePathHead=[folderPath,'Head_',siteStr,'_',yearStr,monthStr,dayStr,'_',timeStr,'.txt'];
+            fidHead=fopen(filePathHead,'w');
+            fprintf(fidHead,'%s',strHead);
+            fclose(fidHead);
+            
+            disp(filePathHead);
+            
+        else
+            
+            disp([siteStr,'_',yearStr,monthStr,dayStr,'_',timeStr,' is empty']);
+            
+        end
         
-        disp(filePathList);
-        
-        filePathHead=[folderPath,'Head_',siteStr,'_',yearStr,monthStr,dayStr,'_',timeStr,'.txt'];
-        fidHead=fopen(filePathHead,'w');
-        fprintf(fidHead,'%s',strHead);
-        fclose(fidHead);
-        
-        disp(filePathHead);
+        break;
         
     end
-    
-else
-    
-    disp('ERROR in load the web page!');
-    exit;
     
 end

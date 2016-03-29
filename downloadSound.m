@@ -3,28 +3,29 @@ clc
 
 addpath('src/');
 
-parpool(9);
+%parpool(10);
 
-%regionStr='europe';
+regionStr='europe';
 typeStr='TEXT%3ALIST';
 %--------------------
 % For validation
-regionStr='seasia';
+%regionStr='seasia';
 %--------------------
 
 inputStr='input/';
 outputStr=['output/',regionStr,'/'];
 
 % Parameters
-siteArr=getSite([inputStr,[regionStr,'.xlsx']]);
-yearArr=2012:2013;
+siteArr=getSite([inputStr,[regionStr,'_sub.xlsx']]);
+yearArr=2007:2014;
 monthArr=1:12;
 timeArr=[0,12];
 
 %% Loop
 
 % For each site
-parfor siteNum=1:length(siteArr)
+%parfor siteNum=1:length(siteArr)
+for siteNum=3
     
     % For each year
     for year=yearArr
