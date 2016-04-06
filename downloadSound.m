@@ -3,7 +3,7 @@ clc
 
 addpath('src/');
 
-%parpool(10);
+parpool(10);
 
 regionStr='europe';
 typeStr='TEXT%3ALIST';
@@ -16,23 +16,19 @@ inputStr='input/';
 outputStr=['output/',regionStr,'/'];
 
 % Parameters
-siteArr=getSite([inputStr,[regionStr,'_sub.xlsx']]);
-yearArr=2007:2014;
-monthArr=1:12;
+siteArr=getSite([inputStr,[regionStr,'.xlsx']]);
+yearArr=2005:2014;
+monthArr=5:9;
 timeArr=[0,12];
 
 %% Loop
 
 % For each site
-%parfor siteNum=1:length(siteArr)
-for siteNum=3
-    
+parfor siteNum=length(siteArr)-20:length(siteArr)
     % For each year
     for year=yearArr
-        
         % For each month
-        for month=monthArr
-            
+        for month=monthArr   
             % For each day
             dayNum=eomday(year,month);
             for day=1:dayNum
@@ -51,7 +47,7 @@ for siteNum=3
                     
                     timeStr=sprintf('%02d',time);
                     % Write files
-                    writeSoundingsFiles(folderPath,regionStr,typeStr,yearStr,monthStr,dayStr,timeStr,siteStr);
+                    writeSound(folderPath,regionStr,typeStr,yearStr,monthStr,dayStr,timeStr,siteStr);
                     
                 end
             end

@@ -1,4 +1,4 @@
-function data=openSoundings(fileName)
+function data=openSound(fileName)
 
 fid=fopen(fileName,'r');
 

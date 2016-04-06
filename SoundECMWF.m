@@ -73,11 +73,11 @@ for siteNum=1:length(siteArr) % For each site
                 for time=timeArr        % For observation time
                     
                     timeStr=sprintf('%02d',time);
-                    data=openSoundings([folderPathSound,'List_',siteStr,'_',yearStr,monthStr,dayStr,'_',timeStr,'.txt']);
+                    data=openSound([folderPathSound,'List_',siteStr,'_',yearStr,monthStr,dayStr,'_',timeStr,'.txt']);
                     
                     if ~isempty(data)
                         % For soundings
-                        [directionSound,speedSound,heightSound]=loadSoundings(data,heightThreshold,speedThreshold,elevationSound);
+                        [directionSound,speedSound,heightSound]=loadSound(data,heightThreshold,speedThreshold,elevationSound);
                         directionSoundTotal=[directionSoundTotal,directionSound];
                         speedSoundTotal=[speedSoundTotal,speedSound];
                         heightSoundTotal=[heightSoundTotal,heightSound];

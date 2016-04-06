@@ -1,4 +1,4 @@
-function writeSoundingsFiles(folderPath,regionStr,typeStr,yearStr,monthStr,dayStr,timeStr,siteStr)
+function writeSound(folderPath,regionStr,typeStr,yearStr,monthStr,dayStr,timeStr,siteStr)
 
 % Construct folders
 if ~exist(folderPath,'dir')
@@ -42,7 +42,7 @@ while true
         end
         
         break;
-        
+       
     end
     
 end
